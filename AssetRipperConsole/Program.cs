@@ -102,6 +102,7 @@ namespace AssetRipper.Console
 			{
 				Ripper ripper = new Ripper();
 				ripper.Settings.LogConfigurationValues();
+				ripper.Settings.LoadPathToGuid();
 				ripper.Load(options.FilesToExport);
 				PrepareExportDirectory(options.OutputDirectory.FullName);
 				ripper.ExportProject(options.OutputDirectory.FullName);

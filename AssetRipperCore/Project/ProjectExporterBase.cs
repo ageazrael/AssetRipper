@@ -138,6 +138,34 @@ namespace AssetRipper.Core.Project
 			queued.Clear();
 			EventExportPreparationFinished?.Invoke();
 
+			if (options.PathToGuid != null && options.PathToGuid.Count > 0)
+			{
+				foreach (SerializedFile file in files)
+				{
+					foreach (IUnityObjectBase asset in file.FetchAssets())
+					{
+						if (asset is MonoScript)
+						{
+							var rMonoScript = (asset as MonoScript);
+							var rFullNameSpace = rMonoScript.Namespace + "." + rMonoScript.Name;
+
+							if (options.PathToGuid.TryGetValue(rFullNameSpace, out var rGuidStr))
+							{
+								asset.AssetInfo.GUID = new UnityGUID(Guid.ParseExact(rGuidStr, "N"));
+							}
+						}
+						else if (asset is Classes.Shader.Shader)
+						{
+							var rShader = (asset as Classes.Shader.Shader);
+							if (options.PathToGuid.TryGetValue(rShader.ValidName, out var rGuidStr))
+							{
+								asset.AssetInfo.GUID = new UnityGUID(Guid.ParseExact(rGuidStr, "N"));
+							}
+						}
+					}
+				}
+			}
+
 			EventExportStarted?.Invoke();
 			ProjectAssetContainer container = new ProjectAssetContainer(this, options, virtualFile, fileCollection.FetchAssets(), collections);
 			for (int i = 0; i < collections.Count; i++)

@@ -173,6 +173,7 @@ namespace AssetRipper.GUI
 			Dispatcher.UIThread.Post(() => AssetFiles.Clear(), DispatcherPriority.Send);
 
 			_ripper.Settings.LogConfigurationValues();
+			_ripper.Settings.LoadPathToGuid();
 
 			UpdateGamePathInUi(gamePath);
 

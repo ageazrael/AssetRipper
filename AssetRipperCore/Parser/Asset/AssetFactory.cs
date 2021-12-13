@@ -71,6 +71,7 @@ using AssetRipper.Core.Classes.UI;
 using AssetRipper.Core.Classes.UI.Canvas;
 using AssetRipper.Core.Classes.UnityConnectSettings;
 using AssetRipper.Core.Classes.WheelCollider;
+using AssetRipper.Core.Classes.LightProbes;
 using AssetRipper.Core.Interfaces;
 using AssetRipper.Core.IO.Asset;
 using AssetRipper.Core.Math;
@@ -351,6 +352,32 @@ namespace AssetRipper.Core.Parser.Asset
 					return new ParticleSystemForceField(assetInfo);
 				case ClassIDType.OcclusionCullingData:
 					return new OcclusionCullingData(assetInfo);
+
+				case ClassIDType.CharacterJoint:
+					return new CharacterJoint(assetInfo);
+				case ClassIDType.HingeJoint:
+					return new HingeJoint(assetInfo);
+				case ClassIDType.FixedJoint:
+					return new FixedJoint(assetInfo);
+				case ClassIDType.SpringJoint:
+					return new SpringJoint(assetInfo);
+				case ClassIDType.ConfigurableJoint:
+					return new ConfigurableJoint(assetInfo);
+
+				case ClassIDType.LightProbes:
+					return new LightProbes(assetInfo);
+
+				case ClassIDType.Cloth:
+					return new Cloth(assetInfo);
+
+				case ClassIDType.AudioMixer:
+					return new Classes.AudioMixer.AudioMixer(assetInfo);
+				case ClassIDType.AudioHighPassFilter:
+					return new Classes.AudioMixer.AudioHighPassFilter(assetInfo);
+				case ClassIDType.AudioLowPassFilter:
+					return new Classes.AudioMixer.AudioLowPassFilter(assetInfo);
+				case ClassIDType.AudioReverbFilter:
+					return new Classes.AudioMixer.AudioReverbFilter(assetInfo);
 
 				case ClassIDType.PrefabInstance:
 					return new PrefabInstance(assetInfo);

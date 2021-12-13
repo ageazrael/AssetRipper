@@ -5,6 +5,9 @@ using AssetRipper.Core.Parser.Files;
 using AssetRipper.Core.Utils;
 using System;
 
+using System.Collections.Generic;
+using System.Text.Json;
+
 namespace AssetRipper.Core.Configuration
 {
 	public class CoreConfiguration
@@ -42,6 +45,9 @@ namespace AssetRipper.Core.Configuration
 		/// Set by default to allow everything.
 		/// </summary>
 		public Func<IUnityObjectBase, bool> Filter { get; set; }
+
+		public Dictionary<string, string> PathToGuid { get; set; } = new Dictionary<string, string>();
+
 		#endregion
 
 		#region Project Settings
@@ -86,6 +92,21 @@ namespace AssetRipper.Core.Configuration
 			Logger.Info(LogCategory.General, $"{nameof(ExportPath)}: {ExportPath}");
 			Logger.Info(LogCategory.General, $"{nameof(ExportDependencies)}: {ExportDependencies}");
 			Logger.Info(LogCategory.General, $"{nameof(IgnoreAssetBundleContentPaths)}: {IgnoreAssetBundleContentPaths}");
+		}
+
+		public void LoadPathToGuid(string rFile = "PathToGuid")
+		{
+			var rFullPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, rFile + ".json");
+			if (!System.IO.File.Exists(rFullPath))
+			{
+				Logger.Info(LogCategory.System, $"Loading PathToGuid {rFullPath} not found!");
+				return;
+			}
+			Logger.Info(LogCategory.System, $"Loading PathToGuid {rFullPath}");
+			using var strema = System.IO.File.OpenRead(rFullPath);
+			PathToGuid = JsonSerializer.Deserialize<Dictionary<string, string>>(strema);
+			if (PathToGuid == null)
+				Logger.Info(LogCategory.System, $"Could not parse PathToGuid file {rFullPath}");
 		}
 	}
 }

@@ -42,6 +42,7 @@ namespace AssetRipper.Library.Configuration
 		/// How are text assets exported?
 		/// </summary>
 		public TextExportMode TextExportMode { get; set; }
+		
 
 		public override void ResetToDefaultValues()
 		{
